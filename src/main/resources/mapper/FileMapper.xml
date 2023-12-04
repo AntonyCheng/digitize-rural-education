@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.sharehome.springbootinittemplate.mapper.FileMapper">
+    <resultMap id="BaseResultMap" type="top.sharehome.springbootinittemplate.model.entity.File">
+        <!--@mbg.generated-->
+        <!--@Table digitize_rural_education.t_file-->
+        <id column="file_id" jdbcType="BIGINT" property="id"/>
+        <result column="file_name" jdbcType="VARCHAR" property="name"/>
+        <result column="file_suffix" jdbcType="VARCHAR" property="suffix"/>
+        <result column="file_type" jdbcType="VARCHAR" property="type"/>
+        <result column="file_size" jdbcType="BIGINT" property="size"/>
+        <result column="file_url" jdbcType="VARCHAR" property="url"/>
+        <result column="file_user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        file_id,
+        file_name,
+        file_suffix,
+        file_type,
+        file_size,
+        file_url,
+        file_user_id,
+        create_time,
+        update_time,
+        is_deleted
+    </sql>
+</mapper>
