@@ -36,7 +36,7 @@ public class TestOss {
      */
     @Test
     void testTencentUtilsDelete() {
-        TencentUtils.delete("https://test-1306588126.cos.ap-chengdu.myqcloud.com/test/init/61f122e335934970be3f2b14eeef37c8_README.md");
+        TencentUtils.delete("https://digitizeeducation-1306588126.cos.ap-beijing.myqcloud.com/test/init/f1ebb673159845c8bb8eadce49c8b93a_README.md");
     }
 
     /**
@@ -74,7 +74,7 @@ public class TestOss {
      */
     @Test
     void testMinioUtilsDelete() {
-        MinioUtils.delete("http://192.168.116.100:39000/xxxxxxxx/test/init/9d6ff8990d3a47b5a2856dc1d06e97ac_README.md");
+        MinioUtils.delete("http://192.168.116.100:39000/xxxxxxxx/test/init/d9f1378cd82a484eb7060fdd48099fd8_README.md");
     }
 
 }

@@ -1,14 +1,22 @@
 package top.sharehome.springbootinittemplate;
 
+import cn.hutool.http.ContentType;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 import top.sharehome.springbootinittemplate.model.entity.User;
 import top.sharehome.springbootinittemplate.service.AuthService;
+import top.sharehome.springbootinittemplate.utils.file.FileUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * 测试类
@@ -62,14 +70,11 @@ class MainApplicationTests {
         System.out.println(admin);
     }
 
-    public static void main(String[] args) {
-        Demo demo = System.out::println;
-        demo.method("2");
+    public static void main(String[] args) throws IOException {
+        File file = new File("README.md");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        MultipartFile multipartFile = new MockMultipartFile(file.getName(),file.getName(), "multipart/form-data", fileInputStream);
+        FileUtils.validatedFile(multipartFile);
     }
 
-}
-
-
-interface Demo {
-    void method(String c);
 }

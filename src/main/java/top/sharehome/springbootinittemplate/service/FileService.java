@@ -14,10 +14,11 @@ public interface FileService {
     /**
      * 上传文件
      *
-     * @param file     文件体
-     * @param fileType 文件分类
+     * @param multipartFile 文件体
+     * @param fileType      文件分类
+     * @param userId        文件所属用户ID
      * @return 返回上传后的文件地址
      */
-    public String uploadFile(MultipartFile file, String fileType);
+    public void uploadFile(MultipartFile multipartFile, String fileType, Long userId);
 
 }

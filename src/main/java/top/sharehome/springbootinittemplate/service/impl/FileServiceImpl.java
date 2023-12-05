@@ -1,15 +1,22 @@
 package top.sharehome.springbootinittemplate.service.impl;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import top.sharehome.springbootinittemplate.common.base.R;
+import top.sharehome.springbootinittemplate.common.base.ReturnCode;
+import top.sharehome.springbootinittemplate.exception.customize.CustomizeReturnException;
+import top.sharehome.springbootinittemplate.exception.customize.CustomizeTransactionException;
 import top.sharehome.springbootinittemplate.mapper.FileMapper;
 import top.sharehome.springbootinittemplate.model.entity.File;
 import top.sharehome.springbootinittemplate.service.FileService;
+import top.sharehome.springbootinittemplate.utils.oss.tencent.TencentUtils;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
 
 /**
  * 文件服务实现类
@@ -23,8 +30,24 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     private FileMapper fileMapper;
 
     @Override
-    public String uploadFile(MultipartFile file,String fileType) {
-
-        return null;
+    @Transactional(rollbackFor = CustomizeTransactionException.class)
+    public void uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
+        long size = multipartFile.getSize();
+        String fileName = StringUtils.isNotBlank(multipartFile.getOriginalFilename()) ? multipartFile.getOriginalFilename() : multipartFile.getName();
+        String suffix = FilenameUtils.getExtension(fileName).toLowerCase();
+        File file = new File()
+                .setSize(size)
+                .setName(fileName)
+                .setSuffix(suffix)
+                .setType(fileType)
+                .setUserId(userId);
+        String dataTime = new DateTime().toString("yyyy/MM/dd");
+        String rootPath = fileType + "/" + suffix + "/" + dataTime;
+        String url = TencentUtils.upload(multipartFile, rootPath);
+        file.setUrl(url);
+        int insert = fileMapper.insert(file);
+        if (insert == 0) {
+            throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
+        }
     }
 }
