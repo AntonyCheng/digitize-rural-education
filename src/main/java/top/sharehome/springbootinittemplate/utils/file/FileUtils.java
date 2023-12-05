@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class FileUtils {
 
-    private static final Map<String, Long> EXTENSION_MAP = new HashMap<>() {
+    private static final Map<String, Long> EXTENSION_MAP = new HashMap<String, Long>() {
         {
             // mp4 视频大小限制600MB
             put("mp4", (long) (600 * 1024 * 1024));
@@ -68,10 +68,19 @@ public class FileUtils {
             throw new CustomizeReturnException(ReturnCode.FILE_UPLOAD_EXCEPTION);
         }
         String fileName = StringUtils.isNotBlank(multipartFile.getOriginalFilename()) ? multipartFile.getOriginalFilename() : multipartFile.getName();
+        if (fileName.length() > 100) {
+            throw new CustomizeReturnException(ReturnCode.USER_FILE_NAME_IS_TOO_LONG);
+        }
         String suffix = FilenameUtils.getExtension(fileName).toLowerCase();
+        if (suffix.length() > 10) {
+            throw new CustomizeReturnException(ReturnCode.USER_FILE_SUFFIX_IS_TOO_LONG);
+        }
         Long maxSize = EXTENSION_MAP.get(suffix);
-        if (ObjectUtils.isEmpty(maxSize) || maxSize < size) {
+        if (ObjectUtils.isEmpty(maxSize)) {
             throw new CustomizeReturnException(ReturnCode.USER_UPLOADED_FILE_TYPE_MISMATCH);
+        }
+        if (maxSize < size) {
+            throw new CustomizeReturnException(ReturnCode.USER_UPLOADED_FILE_IS_TOO_LARGE);
         }
     }
 

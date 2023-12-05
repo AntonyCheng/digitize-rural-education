@@ -2,12 +2,12 @@ package top.sharehome.springbootinittemplate.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import top.sharehome.springbootinittemplate.common.base.R;
 import top.sharehome.springbootinittemplate.common.base.ReturnCode;
 import top.sharehome.springbootinittemplate.exception.customize.CustomizeReturnException;
 import top.sharehome.springbootinittemplate.exception.customize.CustomizeTransactionException;
@@ -31,7 +31,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     @Override
     @Transactional(rollbackFor = CustomizeTransactionException.class)
-    public void uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
+    public void upload(MultipartFile multipartFile, String fileType, Long userId) {
         long size = multipartFile.getSize();
         String fileName = StringUtils.isNotBlank(multipartFile.getOriginalFilename()) ? multipartFile.getOriginalFilename() : multipartFile.getName();
         String suffix = FilenameUtils.getExtension(fileName).toLowerCase();
@@ -49,5 +49,20 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         if (insert == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = CustomizeTransactionException.class)
+    public void deleteFileById(Long fileId, Long userId) {
+        File fileInDatabase = fileMapper.selectById(fileId);
+        if (ObjectUtils.notEqual(userId, fileInDatabase.getUserId())) {
+            throw new CustomizeReturnException(ReturnCode.ACCESS_UNAUTHORIZED);
+        }
+        int deleteResult = fileMapper.deleteById(fileId);
+        if (deleteResult == 0) {
+            throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
+        }
+        String fileUrl = fileInDatabase.getUrl();
+        TencentUtils.delete(fileUrl);
     }
 }

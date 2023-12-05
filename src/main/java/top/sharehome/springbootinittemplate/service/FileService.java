@@ -17,8 +17,14 @@ public interface FileService {
      * @param multipartFile 文件体
      * @param fileType      文件分类
      * @param userId        文件所属用户ID
-     * @return 返回上传后的文件地址
      */
-    public void uploadFile(MultipartFile multipartFile, String fileType, Long userId);
+    public void upload(MultipartFile multipartFile, String fileType, Long userId);
 
+    /**
+     * 根据文件ID进行删除
+     *
+     * @param fileId     文件ID
+     * @param userId 文件所属用户ID
+     */
+    void deleteFileById(Long fileId, Long userId);
 }

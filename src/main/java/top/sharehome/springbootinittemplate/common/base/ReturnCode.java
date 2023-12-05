@@ -189,6 +189,16 @@ public enum ReturnCode {
     USER_FILE_DELETION_IS_ABNORMAL(14008, "用户文件删除异常"),
 
     /**
+     * 用户文件名称过长 14009
+     */
+    USER_FILE_NAME_IS_TOO_LONG(14009, "用户文件名称过长"),
+
+    /**
+     * 用户文件后缀过长 14010
+     */
+    USER_FILE_SUFFIX_IS_TOO_LONG(14010, "用户文件后缀过长"),
+
+    /**
      * 数据库服务出错 20000
      */
     ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE(20000, "数据库服务出错"),
