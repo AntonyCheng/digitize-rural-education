@@ -40,13 +40,13 @@ public class File implements Serializable {
     private String suffix;
 
     /**
-     * 文件类型（share：共享资源，4c：4C微课，customize：定制微课）
+     * 文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课）
      */
     @TableField(value = "file_type")
     private String type;
 
     /**
-     * 文件大小
+     * 文件大小（单位：比特）
      */
     @TableField(value = "file_size")
     private Long size;
@@ -56,6 +56,12 @@ public class File implements Serializable {
      */
     @TableField(value = "file_url")
     private String url;
+
+    /**
+     * 文件状态（0：启用，1：禁用）
+     */
+    @TableField(value = "file_status")
+    private Integer status;
 
     /**
      * 文件所属用户的ID

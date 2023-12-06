@@ -1,5 +1,6 @@
 package top.sharehome.springbootinittemplate.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -12,7 +13,9 @@ import top.sharehome.springbootinittemplate.common.base.ReturnCode;
 import top.sharehome.springbootinittemplate.exception.customize.CustomizeReturnException;
 import top.sharehome.springbootinittemplate.exception.customize.CustomizeTransactionException;
 import top.sharehome.springbootinittemplate.mapper.FileMapper;
+import top.sharehome.springbootinittemplate.model.dto.file.FilePageDto;
 import top.sharehome.springbootinittemplate.model.entity.File;
+import top.sharehome.springbootinittemplate.model.vo.file.FilePageVo;
 import top.sharehome.springbootinittemplate.service.FileService;
 import top.sharehome.springbootinittemplate.utils.oss.tencent.TencentUtils;
 
@@ -45,16 +48,19 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         String rootPath = fileType + "/" + suffix + "/" + dataTime;
         String url = TencentUtils.upload(multipartFile, rootPath);
         file.setUrl(url);
-        int insert = fileMapper.insert(file);
-        if (insert == 0) {
+        int insertResult = fileMapper.insert(file);
+        if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
     }
 
     @Override
     @Transactional(rollbackFor = CustomizeTransactionException.class)
-    public void deleteFileById(Long fileId, Long userId) {
+    public void deleteByFileIdAndUserId(Long fileId, Long userId) {
         File fileInDatabase = fileMapper.selectById(fileId);
+        if (ObjectUtils.isEmpty(fileInDatabase)) {
+            throw new CustomizeReturnException(ReturnCode.DATA_IS_NOT_AVAILABLE_IN_THE_DATABASE);
+        }
         if (ObjectUtils.notEqual(userId, fileInDatabase.getUserId())) {
             throw new CustomizeReturnException(ReturnCode.ACCESS_UNAUTHORIZED);
         }
@@ -65,4 +71,24 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         String fileUrl = fileInDatabase.getUrl();
         TencentUtils.delete(fileUrl);
     }
+
+    @Override
+    public void deleteByFileId(Long fileId) {
+        File fileInDatabase = fileMapper.selectById(fileId);
+        if (ObjectUtils.isEmpty(fileInDatabase)) {
+            throw new CustomizeReturnException(ReturnCode.DATA_IS_NOT_AVAILABLE_IN_THE_DATABASE);
+        }
+        int deleteResult = fileMapper.deleteById(fileId);
+        if (deleteResult == 0) {
+            throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
+        }
+        String fileUrl = fileInDatabase.getUrl();
+        TencentUtils.delete(fileUrl);
+    }
+
+    @Override
+    public Page<FilePageVo> pageFile(FilePageDto filePageDto) {
+        return null;
+    }
+
 }

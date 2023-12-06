@@ -204,6 +204,11 @@ public enum ReturnCode {
     ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE(20000, "数据库服务出错"),
 
     /**
+     * 数据库无此数据 20001
+     */
+    DATA_IS_NOT_AVAILABLE_IN_THE_DATABASE(20001, "数据库无此数据"),
+
+    /**
      * 消息中间件服务出错 30000
      */
     MQ_SERVICE_ERROR(30000, "消息中间件服务出错"),
