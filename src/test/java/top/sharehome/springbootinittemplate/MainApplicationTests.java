@@ -1,6 +1,5 @@
 package top.sharehome.springbootinittemplate;
 
-import cn.hutool.http.ContentType;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.apache.commons.lang3.ObjectUtils;
@@ -15,7 +14,6 @@ import top.sharehome.springbootinittemplate.utils.file.FileUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -73,7 +71,7 @@ class MainApplicationTests {
     public static void main(String[] args) throws IOException {
         File file = new File("README.md");
         FileInputStream fileInputStream = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile(file.getName(),file.getName(), "multipart/form-data", fileInputStream);
+        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(), "multipart/form-data", fileInputStream);
         FileUtils.validatedFile(multipartFile);
     }
 
