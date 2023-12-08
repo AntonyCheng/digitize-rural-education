@@ -33,7 +33,7 @@ public class FilePageVo implements Serializable {
     private String name;
 
     /**
-     * 文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课）
+     * 文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课；avatar：用户头像）
      */
     private String type;
 

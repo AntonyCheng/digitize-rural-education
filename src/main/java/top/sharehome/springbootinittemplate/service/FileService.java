@@ -21,15 +21,15 @@ public interface FileService {
      * @param fileType      文件分类
      * @param userId        文件所属用户ID
      */
-    void upload(MultipartFile multipartFile, String fileType, Long userId);
+    Long uploadFile(MultipartFile multipartFile, String fileType, Long userId);
 
     /**
-     * 根据文件ID和文件所属用户ID进行删除文件
+     * 上传头像
      *
-     * @param fileId 文件ID
-     * @param userId 文件所属用户ID
+     * @param multipartFile 文件体
+     * @param userId        头像所属用户ID
      */
-    void deleteByFileIdAndUserId(Long fileId, Long userId);
+    void uploadAvatar(MultipartFile multipartFile, Long userId);
 
     /**
      * 根据文件ID进行删除文件
@@ -45,5 +45,4 @@ public interface FileService {
      * @return 分页结果
      */
     Page<FilePageVo> pageFile(FilePageDto filePageDto);
-
 }

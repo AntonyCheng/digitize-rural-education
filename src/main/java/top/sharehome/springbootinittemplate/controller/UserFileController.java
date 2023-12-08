@@ -30,30 +30,31 @@ public class UserFileController {
      * 用户上传文件
      *
      * @param fileUploadDto 文件上传Dto类
-     * @return 返回上传结果
+     * @return 返回文件ID
      */
-    @PostMapping("/upload")
-    public R<String> upload(@Validated(PostGroup.class) FileUploadDto fileUploadDto) {
+    @PostMapping("/upload_file")
+    public R<String> uploadFile(@Validated(PostGroup.class) FileUploadDto fileUploadDto) {
         FileUtils.validatedFile(fileUploadDto.getMultipartFile());
         if (!ModelConstant.FILE_TYPE.contains(fileUploadDto.getFileType())) {
             throw new CustomizeReturnException(ReturnCode.FILE_UPLOAD_EXCEPTION);
         }
         Long userId = LoginUtils.getLoginUserId();
-        fileService.upload(fileUploadDto.getMultipartFile(), fileUploadDto.getFileType(), userId);
+        fileService.uploadFile(fileUploadDto.getMultipartFile(), fileUploadDto.getFileType(), userId);
         return R.ok("文件上传成功");
     }
 
     /**
-     * 用户根据文件ID进行删除
+     * 用户上传头像
      *
-     * @param fileId 文件ID
-     * @return 返回删除结果
+     * @param fileUploadDto 文件上传Dto类
+     * @return 返回文件ID
      */
-    @DeleteMapping("/delete/{id}")
-    public R<String> deleteFileById(@PathVariable("id") Long fileId) {
+    @PostMapping("/upload_avatar")
+    public R<String> uploadAvatar(@Validated(PostGroup.class) FileUploadDto fileUploadDto) {
+        FileUtils.validatedAvatar(fileUploadDto.getMultipartFile());
         Long userId = LoginUtils.getLoginUserId();
-        fileService.deleteByFileIdAndUserId(fileId, userId);
-        return R.ok("文件删除成功");
+        fileService.uploadAvatar(fileUploadDto.getMultipartFile(), userId);
+        return R.ok("头像上传成功");
     }
 
 }

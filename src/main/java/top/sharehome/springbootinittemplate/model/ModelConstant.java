@@ -17,20 +17,31 @@ public interface ModelConstant {
      */
     List<String> FILE_TYPE = new ArrayList<String>() {
         {
+            // 资源共享
             add("share");
+            // 4c
             add("fourC");
+            // 定制化
             add("customize");
+            // 用户头像
+            add("avatar");
         }
     };
 
     /**
+     * 文件大小上限（单位：比特）
+     */
+    Long FILE_MAX_SIZE = 600 * 1024 * 1024L;
+
+    /**
+     * 文件大小下限（单位：比特）
+     */
+    Long FILE_MIN_SIZE = 0L;
+
+    /**
      * 启用/禁用状态
      */
-    List<Integer> STATUS = new ArrayList<Integer>() {
-        {
-            add(0);
-            add(1);
-        }
-    };
+    Integer ON = 0;
+    Integer OFF = 1;
 
 }
