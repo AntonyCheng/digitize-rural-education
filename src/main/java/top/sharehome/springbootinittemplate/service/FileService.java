@@ -3,6 +3,7 @@ package top.sharehome.springbootinittemplate.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.multipart.MultipartFile;
 import top.sharehome.springbootinittemplate.model.dto.file.FilePageDto;
+import top.sharehome.springbootinittemplate.model.entity.PageModel;
 import top.sharehome.springbootinittemplate.model.vo.file.FilePageVo;
 
 /**
@@ -29,14 +30,14 @@ public interface FileService {
      * @param multipartFile 文件体
      * @param userId        头像所属用户ID
      */
-    void uploadAvatar(MultipartFile multipartFile, Long userId);
+    Long uploadAvatar(MultipartFile multipartFile, Long userId);
 
     /**
      * 根据文件ID进行删除文件
      *
      * @param fileId 文件ID
      */
-    void deleteByFileId(Long fileId);
+    void deleteById(Long fileId);
 
     /**
      * 文件分页查询
@@ -44,5 +45,5 @@ public interface FileService {
      * @param filePageDto 文件查询条件类
      * @return 分页结果
      */
-    Page<FilePageVo> pageFile(FilePageDto filePageDto);
+    Page<FilePageVo> pageFile(PageModel pageModel, FilePageDto filePageDto);
 }

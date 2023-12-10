@@ -15,16 +15,20 @@ public interface ModelConstant {
     /**
      * 文件模块类型
      */
+    String FILE_TYPE_SHARE = "share";
+    String FILE_TYPE_FOURC = "fourC";
+    String FILE_TYPE_CUSTOMIZE = "customize";
+    String FILE_TYPE_AVATAR = "avatar";
     List<String> FILE_TYPE = new ArrayList<String>() {
         {
             // 资源共享
-            add("share");
+            add(FILE_TYPE_SHARE);
             // 4c
-            add("fourC");
+            add(FILE_TYPE_FOURC);
             // 定制化
-            add("customize");
+            add(FILE_TYPE_CUSTOMIZE);
             // 用户头像
-            add("avatar");
+            add(FILE_TYPE_AVATAR);
         }
     };
 
@@ -41,7 +45,13 @@ public interface ModelConstant {
     /**
      * 启用/禁用状态
      */
-    Integer ON = 0;
-    Integer OFF = 1;
+    Integer STATUS_ON = 0;
+    Integer STATUS_OFF = 1;
+    List<Integer> STATUS = new ArrayList<Integer>() {
+        {
+            add(STATUS_ON);
+            add(STATUS_OFF);
+        }
+    };
 
 }
