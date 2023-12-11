@@ -29,6 +29,7 @@ import top.sharehome.springbootinittemplate.utils.oss.tencent.TencentUtils;
 import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -73,6 +74,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     }
 
     @Override
+    @Transactional(rollbackFor = CustomizeTransactionException.class)
     public Long uploadAvatar(MultipartFile multipartFile, Long userId) {
         LambdaQueryWrapper<File> fileLambdaQueryWrapper = new LambdaQueryWrapper<>();
         fileLambdaQueryWrapper.eq(File::getUserId, userId).eq(File::getType, ModelConstant.FILE_TYPE_AVATAR);
@@ -121,20 +123,20 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         TencentUtils.delete(fileUrl);
     }
 
-    // todo 更新逻辑，再想想有没有更好的办法，不要使用查询后再筛选的方法，不然Page封装属性可能出现冲突
     @Override
+    @Transactional(readOnly = true, rollbackFor = CustomizeTransactionException.class)
     public Page<FilePageVo> pageFile(PageModel pageModel, FilePageDto filePageDto) {
         Page<File> page = new Page<>(pageModel.getPage(), pageModel.getSize());
         Page<FilePageVo> res = new Page<>(pageModel.getPage(), pageModel.getSize());
 
         QueryWrapper<File> queryWrapper = new QueryWrapper<>();
-        // 处理文件名称（表中原有属性）查询条件
+        // 处理文件名称查询条件
         queryWrapper.lambda().like(StringUtils.isNotEmpty(filePageDto.getName()), File::getName, filePageDto.getName());
-        // 处理文件后缀（表中原有属性）查询条件
+        // 处理文件后缀查询条件
         queryWrapper.lambda().like(StringUtils.isNotEmpty(filePageDto.getSuffix()), File::getSuffix, filePageDto.getSuffix());
-        // 处理文件模块类型（表中原有属性）查询条件
+        // 处理文件模块类型查询条件
         queryWrapper.lambda().like(StringUtils.isNotEmpty(filePageDto.getType()), File::getType, filePageDto.getType());
-        // 处理文件大小（表中原有属性）查询条件
+        // 处理文件大小查询条件
         if (ObjectUtils.isNotEmpty(filePageDto.getMinSize()) || ObjectUtils.isNotEmpty(filePageDto.getMaxSize())) {
             Long minSize = filePageDto.getMinSize();
             if (ObjectUtils.isNotEmpty(minSize)) {
@@ -150,29 +152,25 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             }
             queryWrapper.lambda().ge(File::getSize, minSize).le(File::getSize, maxSize);
         }
-        // 处理文件状态（表中原有属性）查询条件
+        // 处理文件状态查询条件
         queryWrapper.lambda().eq(ObjectUtils.isNotEmpty(filePageDto.getStatus()), File::getStatus, filePageDto.getStatus());
-        // 先根据表中原有属性进行查询
-        fileMapper.selectPage(page, queryWrapper);
-
-        // 根据非表中原有属性进行筛选
+        // 处理文件所属用户查询条件
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userLambdaQueryWrapper.like(User::getAccount, filePageDto.getUserAccount());
         List<Long> userIdList = userMapper.selectList(userLambdaQueryWrapper).stream().map(User::getId).collect(Collectors.toList());
-        if (userIdList.isEmpty()) {
-            BeanUtils.copyProperties(page, res, "records");
-            res.setRecords(new LinkedList<>());
-            res.setTotal(0);
-            return res;
+        if (StringUtils.isNotEmpty(filePageDto.getUserAccount()) && userIdList.isEmpty()) {
+            return new Page<>(pageModel.getPage(), pageModel.getSize());
         }
+        queryWrapper.lambda().in(!userIdList.isEmpty(), File::getUserId, userIdList);
+
+        fileMapper.selectPage(page, queryWrapper);
         List<FilePageVo> filePageVoList = page.getRecords().stream().map(file -> {
-            if (!userIdList.contains(file.getUserId())) {
-                return null;
-            }
             FilePageVo filePageVo = new FilePageVo();
+            String userAccount = userMapper.selectAccountById(file.getUserId());
+            filePageVo.setUserAccount(userAccount);
             BeanUtils.copyProperties(file, filePageVo);
             return filePageVo;
-        }).filter(Objects::isNull).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
         BeanUtils.copyProperties(page, res, "records");
         res.setRecords(filePageVoList);
