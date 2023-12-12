@@ -38,9 +38,14 @@ public class FilePageVo implements Serializable {
     private String type;
 
     /**
-     * 文件大小（单位：MB）
+     * 文件大小
      */
     private Long size;
+
+    /**
+     * 文件大小单位
+     */
+    private String unit;
 
     /**
      * 文件存储地址

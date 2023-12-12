@@ -27,10 +27,7 @@ import top.sharehome.springbootinittemplate.service.FileService;
 import top.sharehome.springbootinittemplate.utils.oss.tencent.TencentUtils;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +38,15 @@ import java.util.stream.Collectors;
 @Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements FileService {
 
-    private static final long TO_BYTE = 1024 * 1024;
+    /**
+     * 2^10
+     */
+    private static final long TWO_10 = 1024;
+
+    /**
+     * 2^20
+     */
+    private static final long TWO_20 = 1024 * 1024;
 
     @Resource
     private FileMapper fileMapper;
@@ -138,18 +143,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         queryWrapper.lambda().like(StringUtils.isNotEmpty(filePageDto.getType()), File::getType, filePageDto.getType());
         // 处理文件大小查询条件
         if (ObjectUtils.isNotEmpty(filePageDto.getMinSize()) || ObjectUtils.isNotEmpty(filePageDto.getMaxSize())) {
-            Long minSize = filePageDto.getMinSize();
-            if (ObjectUtils.isNotEmpty(minSize)) {
-                minSize = minSize * TO_BYTE;
-            } else {
-                minSize = ModelConstant.FILE_MIN_SIZE;
-            }
-            Long maxSize = filePageDto.getMaxSize();
-            if (ObjectUtils.isNotEmpty(maxSize)) {
-                maxSize = maxSize * TO_BYTE;
-            } else {
-                maxSize = ModelConstant.FILE_MAX_SIZE;
-            }
+            Long minSize = ObjectUtils.isNotEmpty(filePageDto.getMinSize()) ? filePageDto.getMinSize() * TWO_20 : ModelConstant.FILE_MIN_SIZE;
+            Long maxSize = ObjectUtils.isNotEmpty(filePageDto.getMaxSize()) ? filePageDto.getMaxSize() * TWO_20 : ModelConstant.FILE_MAX_SIZE;
             queryWrapper.lambda().ge(File::getSize, minSize).le(File::getSize, maxSize);
         }
         // 处理文件状态查询条件
@@ -169,6 +164,15 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             String userAccount = userMapper.selectAccountById(file.getUserId());
             filePageVo.setUserAccount(userAccount);
             BeanUtils.copyProperties(file, filePageVo);
+            if (filePageVo.getSize() < TWO_10) {
+                filePageVo.setUnit(ModelConstant.FILE_UNIT_B);
+            } else if (filePageVo.getSize() < TWO_20 * 10) {
+                filePageVo.setSize(filePageVo.getSize() / TWO_10);
+                filePageVo.setUnit(ModelConstant.FILE_UNIT_KB);
+            } else {
+                filePageVo.setSize(filePageVo.getSize() / TWO_20);
+                filePageVo.setUnit(ModelConstant.FILE_UNIT_MB);
+            }
             return filePageVo;
         }).collect(Collectors.toList());
 

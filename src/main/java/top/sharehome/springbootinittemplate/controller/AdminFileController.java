@@ -30,6 +30,13 @@ public class AdminFileController {
     @Resource
     private FileService fileService;
 
+    /**
+     * 分页获取用户文件信息
+     *
+     * @param pageModel   分页实体类
+     * @param filePageDto 文件分页Dto类
+     * @return 返回分页数据
+     */
     @GetMapping("/page")
     public R<Page<FilePageVo>> pageFile(@Validated(GetGroup.class) PageModel pageModel, @Validated(GetGroup.class) FilePageDto filePageDto) {
         Page<FilePageVo> res = fileService.pageFile(pageModel, filePageDto);

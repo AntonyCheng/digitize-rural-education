@@ -33,14 +33,17 @@ public interface ModelConstant {
     };
 
     /**
-     * 文件大小上限（单位：比特）
+     * 文件大小上下限（单位：比特）
      */
     Long FILE_MAX_SIZE = 600 * 1024 * 1024L;
+    Long FILE_MIN_SIZE = 0L;
 
     /**
-     * 文件大小下限（单位：比特）
+     * 文件大小单位
      */
-    Long FILE_MIN_SIZE = 0L;
+    String FILE_UNIT_B = "B";
+    String FILE_UNIT_KB = "KB";
+    String FILE_UNIT_MB = "MB";
 
     /**
      * 启用/禁用状态
