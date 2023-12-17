@@ -47,11 +47,6 @@ public class FilePageDto implements Serializable {
     private Long maxSize;
 
     /**
-     * 文件状态（0：启用，1：禁用）
-     */
-    private Integer status;
-
-    /**
      * 文件所属用户的账号
      */
     private String userAccount;

@@ -53,11 +53,6 @@ public class FilePageVo implements Serializable {
     private String url;
 
     /**
-     * 文件状态（0：启用，1：禁用）
-     */
-    private Integer status;
-
-    /**
      * 文件所属用户的ID
      */
     private Long userId;

@@ -58,12 +58,6 @@ public class File implements Serializable {
     private String url;
 
     /**
-     * 文件状态（0：启用，1：禁用）
-     */
-    @TableField(value = "file_status")
-    private Integer status;
-
-    /**
      * 文件所属用户的ID
      */
     @TableField(value = "file_user_id")

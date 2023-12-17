@@ -58,6 +58,24 @@ public class User implements Serializable {
     private String role;
 
     /**
+     * 用户学校
+     */
+    @TableField(value = "user_school")
+    private String school;
+
+    /**
+     *用户已读留言数量
+     */
+    @TableField(value = "user_message_read", fill = FieldFill.INSERT)
+    private Long messageRead;
+
+    /**
+     * 用户总共留言数量
+     */
+    @TableField(value = "user_message_total", fill = FieldFill.INSERT)
+    private Long messageTotal;
+
+    /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -89,6 +107,12 @@ public class User implements Serializable {
     public static final String COL_USER_AVATAR = "user_avatar";
 
     public static final String COL_USER_ROLE = "user_role";
+
+    public static final String COL_USER_SCHOOL = "user_school";
+
+    public static final String COL_USER_MESSAGE_READ = "user_message_read";
+
+    public static final String COL_USER_MESSAGE_TOTAL = "user_message_total";
 
     public static final String COL_CREATE_TIME = "create_time";
 
