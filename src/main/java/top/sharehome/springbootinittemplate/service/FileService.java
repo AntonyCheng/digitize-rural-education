@@ -10,7 +10,6 @@ import top.sharehome.springbootinittemplate.model.vo.file.FilePageVo;
  * 文件服务接口
  *
  * @author AntonyCheng
- * @since 2023/12/4 22:19:26
  */
 
 public interface FileService {

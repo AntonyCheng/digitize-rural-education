@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.sharehome.springbootinittemplate.mapper.ResourceMapper">
+    <resultMap id="BaseResultMap" type="top.sharehome.springbootinittemplate.model.entity.Resource">
+        <!--@mbg.generated-->
+        <!--@Table digitize_rural_education.t_resource-->
+        <id column="resource_id" jdbcType="BIGINT" property="id"/>
+        <result column="resource_title" jdbcType="VARCHAR" property="title"/>
+        <result column="resource_info" jdbcType="VARCHAR" property="info"/>
+        <result column="resource_file_id" jdbcType="BIGINT" property="fileId"/>
+        <result column="resource_file_type" jdbcType="VARCHAR" property="fileType"/>
+        <result column="resource_user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="resource_status" jdbcType="TINYINT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        resource_id,
+        resource_title,
+        resource_info,
+        resource_file_id,
+        resource_file_type,
+        resource_user_id,
+        resource_status,
+        create_time,
+        update_time,
+        is_deleted
+    </sql>
+</mapper>

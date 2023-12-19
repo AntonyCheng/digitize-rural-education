@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : mysql-standalone-cloud
- Source Server Type    : MySQL
- Source Server Version : 80028 (8.0.28)
- Source Host           : 121.36.90.144:23305
- Source Schema         : digitize_rural_education
-
- Target Server Type    : MySQL
- Target Server Version : 80028 (8.0.28)
- File Encoding         : 65001
-
- Date: 17/12/2023 18:44:22
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

@@ -24,7 +24,7 @@
         file_type,
         file_size,
         file_url,
-        file_resource_id
+        file_resource_id,
         file_user_id,
         create_time,
         update_time,
