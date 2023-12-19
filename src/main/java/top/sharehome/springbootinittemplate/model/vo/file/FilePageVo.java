@@ -63,6 +63,11 @@ public class FilePageVo implements Serializable {
     private String userAccount;
 
     /**
+     * 文件所属资源的名称
+     */
+    private String resourceName;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

@@ -70,7 +70,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         String rootPath = fileType + "/" + suffix + "/" + dataTime;
         String url = TencentUtils.upload(multipartFile, rootPath);
         file.setUrl(url);
-        file.setStatus(ModelConstant.STATUS_ON);
         int insertResult = fileMapper.insert(file);
         if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
@@ -105,7 +104,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         String rootPath = ModelConstant.FILE_TYPE_AVATAR + "/" + suffix + "/" + dataTime;
         String url = TencentUtils.upload(multipartFile, rootPath);
         file.setUrl(url);
-        file.setStatus(ModelConstant.STATUS_ON);
         int insertResult = fileMapper.insert(file);
         if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
@@ -147,8 +145,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             Long maxSize = ObjectUtils.isNotEmpty(filePageDto.getMaxSize()) ? filePageDto.getMaxSize() * TWO_20 : ModelConstant.FILE_MAX_SIZE;
             queryWrapper.lambda().ge(File::getSize, minSize).le(File::getSize, maxSize);
         }
-        // 处理文件状态查询条件
-        queryWrapper.lambda().eq(ObjectUtils.isNotEmpty(filePageDto.getStatus()), File::getStatus, filePageDto.getStatus());
         // 处理文件所属用户查询条件
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userLambdaQueryWrapper.like(User::getAccount, filePageDto.getUserAccount());
@@ -157,11 +153,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             return new Page<>(pageModel.getPage(), pageModel.getSize());
         }
         queryWrapper.lambda().in(!userIdList.isEmpty(), File::getUserId, userIdList);
+        // 不需要对头像文件进行分页
+        queryWrapper.lambda().ne(File::getType,ModelConstant.FILE_TYPE_AVATAR);
 
         fileMapper.selectPage(page, queryWrapper);
         List<FilePageVo> filePageVoList = page.getRecords().stream().map(file -> {
             FilePageVo filePageVo = new FilePageVo();
             String userAccount = userMapper.selectAccountById(file.getUserId());
+            // todo 这里需要搭建好资源模块之后在进行编写返回资源名称的功能
             filePageVo.setUserAccount(userAccount);
             BeanUtils.copyProperties(file, filePageVo);
             if (filePageVo.getSize() < TWO_10) {

@@ -51,4 +51,9 @@ public class FilePageDto implements Serializable {
      */
     private String userAccount;
 
+    /**
+     * 文件所属资源的名称
+     */
+    private String resourceName;
+
 }

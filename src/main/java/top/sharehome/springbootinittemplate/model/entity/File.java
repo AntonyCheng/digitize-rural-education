@@ -58,6 +58,12 @@ public class File implements Serializable {
     private String url;
 
     /**
+     * 文件所属资源的ID
+     */
+    @TableField(value = "file_resource_id")
+    private Long resourceId;
+
+    /**
      * 文件所属用户的ID
      */
     @TableField(value = "file_user_id")
