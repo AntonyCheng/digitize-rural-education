@@ -37,6 +37,10 @@ class MainApplicationTests {
         user.setAccount("admin");
         // 设置用户密码
         user.setPassword("123456");
+        // 设置用户名
+        user.setName("admin");
+        // 设置用户学校
+        user.setSchool("哈尔滨商业大学");
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userLambdaQueryWrapper.eq(User::getRole, "admin");
         if (ObjectUtils.isEmpty(authService.getOne(userLambdaQueryWrapper))) {
@@ -69,10 +73,7 @@ class MainApplicationTests {
     }
 
     public static void main(String[] args) throws IOException {
-        File file = new File("README.md");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(), "multipart/form-data", fileInputStream);
-        FileUtils.validatedFile(multipartFile);
+        System.out.println("hello world");
     }
 
 }
