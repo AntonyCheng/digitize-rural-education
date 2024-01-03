@@ -46,6 +46,18 @@ public class AuthRegisterDto implements Serializable {
     private String checkPassword;
 
     /**
+     * 用户名
+     */
+    @NotBlank(message = "用户名不能为空", groups = {PostGroup.class})
+    private String name;
+
+    /**
+     * 用户学校
+     */
+    @NotBlank(message = "学校名不能为空", groups = {PostGroup.class})
+    private String school;
+
+    /**
      * 验证码
      */
     private String code;
