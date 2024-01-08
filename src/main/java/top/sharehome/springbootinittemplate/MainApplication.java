@@ -10,7 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * 启动类
+ * 加数前进启动类
  *
  * @author AntonyCheng
  */
