@@ -8,7 +8,7 @@
       <!-- 主要内容区域 -->
       <header>
         <!-- 页面头部内容 -->
-        <h1>页面标题</h1>
+        <Header :username="this.name" />
       </header>
       <section>
         <!-- 主要内容 -->
@@ -16,19 +16,44 @@
       </section>
       <footer>
         <!-- 页面底部内容 -->
-        <p>页脚信息</p>
+        <p>管理员管理</p>
       </footer>
     </main>
   </div>
 </template>
 
 <script>
-import Navigation from 'ui/src/components/navigation.vue'
+import Navigation from '@/components/navigation.vue'
+import Header from '@/components/header.vue'
 export default {
-  name: 'Main',
+  name: 'adminMain',
+  data() {
+    return {
+      name:'',
+    };
+  },
+  mounted() {
+    // 在组件挂载到 DOM 后执行的操作
+    this.created();
+  },
   components: {
   Navigation, // 注册导航组件
+  Header,
 },
+  methods:{
+    created() {
+         const cachedData = localStorage.getItem('cachedData');
+            if (cachedData) {
+            this.cachedData = JSON.parse(cachedData); // 从 LocalStorage 获取数据
+             console.log(this.cachedData);
+             console.log(this.cachedData.data.name);
+             this.name=this.cachedData.data.name
+             console.log(this.name);
+                   } else {
+                    console.log("error")
+           }
+  },
+}
 }
 </script>
 

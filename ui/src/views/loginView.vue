@@ -21,8 +21,8 @@
 </template>
 
 <script>
-// import AXIOS from '@/axios/axiosInstance'
-// import { ElMessage } from 'element-plus'
+ import Axios from '@/axios/axiosInstance'
+ import { ElMessage } from 'element-plus'
 export default {
   name: 'loginView',
   data() {
@@ -39,29 +39,35 @@ export default {
     },
     //登录方法
     login() {
-      // AXIOS({
-      //   url: '/api/auth/login',
-      //   method: 'post',
-      //   data: {
-      //     'account': this.account,
-      //     'password': this.password
-      //   }
-      // }).then((res) => {
-      //   console.log(res);
-      //   if(res.data.code=='200'){
-      //     ElMessage({
-      //   message: res.data.msg,
-      //   type: 'success',
-      // })
-      // this.$router.push('/adminMain');
-      //   }
-      //   else{
-      //     ElMessage({
-      //   message: res.data.msg,
-      //   type: 'error',
-      // })
-      //   }
-      // })
+      Axios({
+        url: '/api/auth/login',
+        method: 'post',
+        data: {
+          'account': this.account,
+          'password': this.password
+        }
+      }).then((res) => {
+        console.log(res);
+        if(res.data.code=='200'){
+          ElMessage({
+        message: res.data.msg,
+        type: 'success',
+      })
+      localStorage.setItem('cachedData', JSON.stringify(res.data));
+      if(res.data.data.role=='admin'){
+        this.$router.push('/adminMain');
+      }else if(res.data.data.role=='user'){
+        this.$router.push('/userMain');
+      }
+
+        }
+        else{
+          ElMessage({
+        message: res.data.msg,
+        type: 'error',
+      })
+        }
+      })
     }
   }
 }

@@ -11,6 +11,10 @@
           <input type="password" id="password" v-model="password" required>
         </div>
         <div class="form-group">
+          <label for="checkPassword">确认密码：</label>
+          <input type="password" id="checkPassword" v-model="checkPassword" required>
+        </div>
+        <div class="form-group">
           <label for="username">用户名：</label>
           <input type="text" id="username" v-model="username" required>
         </div>
@@ -27,8 +31,8 @@
   </template>
   
   <script>
-// import AXIOS from '@/axios/axiosInstance';
-
+ import Axios from '@/axios/axiosInstance';
+ import { ElMessage } from 'element-plus'
   export default {
     name: 'RegistrationForm',
     data() {
@@ -36,25 +40,39 @@
         account: '',
         password: '',
         username: '',
-        school: ''
+        school: '',
+        checkPassword:''
       };
     },
     methods: {
       registerUser() {
         // 在这里执行注册逻辑，发送数据到后端或进行其他操作
         // 例如：向后端发送注册请求
-    //   AXIOS({
-    //     url:'',
-    //     method:'post',
-    //     data:{
-    //         'account': this.account,
-    //         'password': this.password,
-    //         'username': this.username,
-    //         'school': this.school
-    //     }
-    //   }).then((res)=>{
-    //     console.log(res);
-    //   })
+      Axios({
+        url:'/api/auth/register',
+        method:'post',
+        data:{
+            'account': this.account,
+            'password': this.password,
+            'name': this.username,
+            'checkPassword':this.checkPassword,
+            'school': this.school
+        }
+      }).then((res)=>{
+        if(res.data.code=='200'){
+          ElMessage({
+        message: res.data.msg,
+        type: 'success',
+      })
+      this.$router.push('/login');
+        }
+        else{
+          ElMessage({
+        message: res.data.msg,
+        type: 'error',
+      })
+        }
+      })
 
 
       },
