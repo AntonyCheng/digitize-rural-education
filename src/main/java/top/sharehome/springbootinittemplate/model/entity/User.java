@@ -64,7 +64,7 @@ public class User implements Serializable {
     private String school;
 
     /**
-     *用户已读留言数量
+     * 用户已读留言数量
      */
     @TableField(value = "user_message_read", fill = FieldFill.INSERT)
     private Long messageRead;

@@ -1,4 +1,4 @@
-package top.sharehome.springbootinittemplate.controller;
+package top.sharehome.springbootinittemplate.controller.admin;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * @since 2023/12/6 23:16:31
  */
 @RestController
-@RequestMapping("/admin_file")
+@RequestMapping("/admin/file")
 @SaCheckRole(Constants.USER_ROLE_ADMIN)
 public class AdminFileController {
 
@@ -38,7 +38,7 @@ public class AdminFileController {
      * @return 返回分页数据
      */
     @GetMapping("/page")
-    public R<Page<FilePageVo>> pageFile(@Validated(GetGroup.class) PageModel pageModel, @Validated(GetGroup.class) FilePageDto filePageDto) {
+    public R<Page<FilePageVo>> pageFile(@Validated(GetGroup.class) PageModel pageModel, FilePageDto filePageDto) {
         Page<FilePageVo> res = fileService.pageFile(pageModel, filePageDto);
         return R.ok(res);
     }

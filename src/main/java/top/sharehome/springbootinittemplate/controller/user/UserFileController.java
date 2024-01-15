@@ -1,4 +1,4 @@
-package top.sharehome.springbootinittemplate.controller;
+package top.sharehome.springbootinittemplate.controller.user;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
  * @author AntonyCheng
  */
 @RestController
-@RequestMapping("/user_file")
+@RequestMapping("/user/file")
 public class UserFileController {
 
     @Resource

@@ -33,8 +33,7 @@ public class FileUploadDto implements Serializable {
     /**
      * 文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课；avatar：用户头像）
      */
-    @NotNull(message = "上传文件所属模块为空", groups = {PostGroup.class})
-    @NotEmpty(message = "上传文件所属模块未知", groups = {PostGroup.class})
+    @NotEmpty(message = "上传文件所属模块不能为空", groups = {PostGroup.class})
     private String fileType;
 
 }
