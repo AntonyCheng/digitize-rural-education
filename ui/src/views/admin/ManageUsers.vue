@@ -46,7 +46,6 @@ export default {
       totalItems: 0,
       currentPage: 1,
       tableData: [],
-      token: 'f9_lSjv3NreuXIYez_FCijqcPboOODtvjm__'
     };
   },
   mounted() {
