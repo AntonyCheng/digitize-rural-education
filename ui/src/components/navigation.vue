@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import Axios from '@/axios/axiosInstance';
 import { ElMessage } from 'element-plus'
 export default {
   name:'Navigation',
@@ -47,6 +48,12 @@ export default {
         }
       },
     logout() {
+      Axios({
+        url: '/api/auth/logout',
+        method: 'delete',
+      }).then((res)=>{
+        console.log(res)
+      })
       ElMessage({
         message: '退出成功',
         type: 'success',
