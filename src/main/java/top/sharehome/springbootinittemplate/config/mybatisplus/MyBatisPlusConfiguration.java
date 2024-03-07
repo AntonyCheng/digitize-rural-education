@@ -1,7 +1,8 @@
 package top.sharehome.springbootinittemplate.config.mybatisplus;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,13 +19,17 @@ import javax.annotation.PostConstruct;
 public class MyBatisPlusConfiguration {
 
     /**
-     * 基于AOP思想进行mybatis-plus的分页操作
+     * MyBatis-Plus插件
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
-        log.info(">>>>>>>>>>> mybatis plus pagination inner config init.");
+        // 分页插件，如果有多个插件，分页插件添加在最后
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        // 防止全表更新与删除插件
+        mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        // 数据变动记录插件
+        mybatisPlusInterceptor.addInnerInterceptor(new DataChangeRecorderInnerInterceptor());
         return mybatisPlusInterceptor;
     }
 
@@ -33,7 +38,7 @@ public class MyBatisPlusConfiguration {
      */
     @PostConstruct
     private void initDi() {
-        log.info("############ mybatis plus config DI.");
+        log.info("############ {} Configuration DI.", this.getClass().getSimpleName().split("\\$\\$")[0]);
     }
 
 }

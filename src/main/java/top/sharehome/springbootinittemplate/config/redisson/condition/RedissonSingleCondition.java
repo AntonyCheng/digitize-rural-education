@@ -14,8 +14,8 @@ public class RedissonSingleCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        String property = context.getEnvironment().getProperty("redisson.singleServerConfig.enableSingle");
-        return StringUtils.equals("true", property);
+        String property = context.getEnvironment().getProperty("redisson.single-server-config.enable-single");
+        return StringUtils.equals(Boolean.TRUE.toString(), property);
     }
 
 }

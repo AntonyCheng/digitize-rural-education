@@ -1,19 +1,18 @@
 package top.sharehome.springbootinittemplate.utils.oss.tencent;
 
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 import top.sharehome.springbootinittemplate.config.bean.SpringContextHolder;
-import top.sharehome.springbootinittemplate.config.oss.tencent.condition.OssTencentCondition;
 import top.sharehome.springbootinittemplate.config.oss.tencent.TencentConfiguration;
+
+import java.io.InputStream;
 
 /**
  * 腾讯云COS工具类
  *
  * @author AntonyCheng
  */
-@Component
-@Conditional(OssTencentCondition.class)
+@Slf4j
 public class TencentUtils {
 
     /**
@@ -30,6 +29,30 @@ public class TencentUtils {
      */
     public static String upload(MultipartFile file, String rootPath) {
         return TENCENT_CONFIGURATION.uploadToCos(file, rootPath);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param inputStream 待上传的文件流
+     * @param suffix      文件后缀
+     * @param rootPath    上传的路径
+     * @return 文件所在路径
+     */
+    public static String upload(InputStream inputStream, String suffix, String rootPath) {
+        return TENCENT_CONFIGURATION.uploadToCos(inputStream, suffix, rootPath);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param bytes    待上传的文件字节数据
+     * @param suffix   文件后缀
+     * @param rootPath 上传的路径
+     * @return 文件所在路径
+     */
+    public static String upload(byte[] bytes, String suffix, String rootPath) {
+        return TENCENT_CONFIGURATION.uploadToCos(bytes, suffix, rootPath);
     }
 
     /**

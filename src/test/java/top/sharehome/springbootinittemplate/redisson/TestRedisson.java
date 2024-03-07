@@ -5,11 +5,11 @@ import org.apache.commons.lang3.ThreadUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.sharehome.springbootinittemplate.exception.customize.CustomizeReturnException;
-import top.sharehome.springbootinittemplate.utils.redisson.CacheUtils;
-import top.sharehome.springbootinittemplate.utils.redisson.LockUtils;
-import top.sharehome.springbootinittemplate.utils.redisson.RateLimitUtils;
-import top.sharehome.springbootinittemplate.utils.redisson.function.SuccessFunction;
-import top.sharehome.springbootinittemplate.utils.redisson.function.VoidFunction;
+import top.sharehome.springbootinittemplate.utils.redisson.cache.CacheUtils;
+import top.sharehome.springbootinittemplate.utils.redisson.lock.LockUtils;
+import top.sharehome.springbootinittemplate.utils.redisson.lock.function.SuccessFunction;
+import top.sharehome.springbootinittemplate.utils.redisson.lock.function.VoidFunction;
+import top.sharehome.springbootinittemplate.utils.redisson.rateLimit.RateLimitUtils;
 
 import java.time.Duration;
 import java.util.*;
@@ -75,6 +75,16 @@ public class TestRedisson {
         System.out.println(CacheUtils.getMap("test"));
         System.out.println(CacheUtils.existsMap("test"));
         CacheUtils.deleteMap("test");
+
+        // 测试使用通配符模糊操作
+        for (int i = 0; i < 100; i++) {
+            HashMap<String, String> stringStringHashMap = new HashMap<>();
+            stringStringHashMap.put("test" + i, "test" + i);
+            CacheUtils.put("test" + i, stringStringHashMap);
+        }
+        List<String> keysByPattern = CacheUtils.getKeysByPattern("test*");
+        Map<String, Object> keyValuesByPattern = CacheUtils.getKeyValuesByPattern("test*");
+        CacheUtils.deleteByPattern("test*");
     }
 
     /**
@@ -82,22 +92,22 @@ public class TestRedisson {
      */
     @Test
     void testRateLimitUtils() throws InterruptedException {
-        try {
-            for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
+            try {
                 RateLimitUtils.doRateLimit("test");
                 System.out.println(i);
+            } catch (CustomizeReturnException e) {
+                System.out.println("请求太多，请稍后");
             }
-        } catch (CustomizeReturnException e) {
-            System.out.println("请求太多，请稍后");
         }
         ThreadUtils.sleep(Duration.ofSeconds(2));
-        try {
-            for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
+            try {
                 RateLimitUtils.doRateLimit("test");
                 System.out.println(i);
+            } catch (CustomizeReturnException e) {
+                System.out.println("请求太多，请稍后");
             }
-        } catch (CustomizeReturnException e) {
-            System.out.println("请求太多，请稍后");
         }
     }
 
@@ -135,7 +145,7 @@ public class TestRedisson {
                 System.out.println("主线程第" + finalI + "次释放锁");
             });
         }
-        while (true) {
+        for (; ; ) {
         }
     }
 
@@ -170,7 +180,7 @@ public class TestRedisson {
                 System.out.println("主线程第" + finalI + "次没拿到锁");
             }
         }
-        while (true) {
+        for (; ; ) {
         }
     }
 

@@ -8,19 +8,21 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * 加数前进启动类
+ * 启动类
  *
  * @author AntonyCheng
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "top.sharehome.springbootinittemplate.**")
 @MapperScan("top.sharehome.springbootinittemplate.mapper")
 @EsMapperScan("top.sharehome.springbootinittemplate.elasticsearch.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableConfigurationProperties
 @ConfigurationPropertiesScan("top.sharehome.springbootinittemplate.config.**")
+@EnableTransactionManagement
 public class MainApplication {
 
     public static void main(String[] args) {

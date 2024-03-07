@@ -33,19 +33,10 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
     public static final String IS_DELETED = "isDeleted";
 
     /**
+     * todo 如果有自己的一套鉴权系统，请去掉这个自动填充项
      * 需要处理的字段名——role
      */
     public static final String ROLE = "role";
-
-    /**
-     * 需要处理的字段名——messageRead
-     */
-    public static final String MESSAGE_READ = "messageRead";
-
-    /**
-     * 需要处理的字段名——messageTotal
-     */
-    public static final String MESSAGE_TOTAL = "messageTotal";
 
     /**
      * 插入时自动填充的字段
@@ -67,14 +58,6 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
         if (metaObject.hasSetter(ROLE)) {
             metaObject.setValue(ROLE, "user");
         }
-
-        if (metaObject.hasSetter(MESSAGE_READ)) {
-            metaObject.setValue(MESSAGE_READ, 0L);
-        }
-
-        if (metaObject.hasSetter(MESSAGE_TOTAL)) {
-            metaObject.setValue(MESSAGE_TOTAL, 0L);
-        }
     }
 
     /**
@@ -92,7 +75,7 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
      */
     @PostConstruct
     private void initDi() {
-        log.info("############ meta object config DI.");
+        log.info("############ {} Configuration DI.", this.getClass().getSimpleName().split("\\$\\$")[0]);
     }
 
 }

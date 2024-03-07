@@ -101,13 +101,6 @@ public class LoginUtils {
     }
 
     /**
-     * 让某一用户退出
-     */
-    public static void logout(Long id) {
-        StpUtil.logout(id);
-    }
-
-    /**
      * 用户退出
      */
     public static void logout() {

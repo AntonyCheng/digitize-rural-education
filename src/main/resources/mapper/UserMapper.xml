@@ -3,16 +3,13 @@
 <mapper namespace="top.sharehome.springbootinittemplate.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="top.sharehome.springbootinittemplate.model.entity.User">
         <!--@mbg.generated-->
-        <!--@Table digitize_rural_education.t_user-->
+        <!--@Table init_db.t_user-->
         <id column="user_id" jdbcType="BIGINT" property="id"/>
         <result column="user_account" jdbcType="VARCHAR" property="account"/>
         <result column="user_password" jdbcType="VARCHAR" property="password"/>
         <result column="user_name" jdbcType="VARCHAR" property="name"/>
         <result column="user_avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="user_role" jdbcType="VARCHAR" property="role"/>
-        <result column="user_school" jdbcType="VARCHAR" property="school"/>
-        <result column="user_message_read" jdbcType="BIGINT" property="messageRead"/>
-        <result column="user_message_total" jdbcType="BIGINT" property="messageTotal"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
@@ -25,9 +22,6 @@
         user_name,
         user_avatar,
         user_role,
-        user_school,
-        user_message_read,
-        user_message_total,
         create_time,
         update_time,
         is_deleted

@@ -108,12 +108,6 @@ public class User implements Serializable {
 
     public static final String COL_USER_ROLE = "user_role";
 
-    public static final String COL_USER_SCHOOL = "user_school";
-
-    public static final String COL_USER_MESSAGE_READ = "user_message_read";
-
-    public static final String COL_USER_MESSAGE_TOTAL = "user_message_total";
-
     public static final String COL_CREATE_TIME = "create_time";
 
     public static final String COL_UPDATE_TIME = "update_time";

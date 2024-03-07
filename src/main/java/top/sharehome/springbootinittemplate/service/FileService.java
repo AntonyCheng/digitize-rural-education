@@ -18,7 +18,7 @@ public interface FileService {
      * 上传文件
      *
      * @param multipartFile 文件体
-     * @param fileType      文件分类
+     * @param fileType      文件类型
      * @param userId        文件所属用户ID
      */
     Long uploadFile(MultipartFile multipartFile, String fileType, Long userId);

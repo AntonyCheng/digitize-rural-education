@@ -98,6 +98,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
                 .setSize(size)
                 .setName(fileName)
                 .setSuffix(suffix)
+                // 如果上传文件为头像，则将对应资源ID设置为0
+                .setResourceId(0L)
                 .setType(ModelConstant.FILE_TYPE_AVATAR)
                 .setUserId(userId);
         String dataTime = new DateTime().toString("yyyy/MM/dd");

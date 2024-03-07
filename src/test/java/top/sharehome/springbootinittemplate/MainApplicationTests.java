@@ -2,19 +2,15 @@ package top.sharehome.springbootinittemplate;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.scheduling.annotation.EnableAsync;
 import top.sharehome.springbootinittemplate.model.entity.User;
 import top.sharehome.springbootinittemplate.service.AuthService;
-import top.sharehome.springbootinittemplate.utils.file.FileUtils;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * 测试类
@@ -22,6 +18,8 @@ import java.io.IOException;
  * @author AntonyCheng
  */
 @SpringBootTest
+@EnableAsync
+@Slf4j
 class MainApplicationTests {
 
     @Resource
@@ -37,10 +35,6 @@ class MainApplicationTests {
         user.setAccount("admin");
         // 设置用户密码
         user.setPassword("123456");
-        // 设置用户名
-        user.setName("admin");
-        // 设置用户学校
-        user.setSchool("哈尔滨商业大学");
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userLambdaQueryWrapper.eq(User::getRole, "admin");
         if (ObjectUtils.isEmpty(authService.getOne(userLambdaQueryWrapper))) {
@@ -72,7 +66,7 @@ class MainApplicationTests {
         System.out.println(admin);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.out.println("hello world");
     }
 

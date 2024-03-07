@@ -189,14 +189,24 @@ public enum ReturnCode {
     USER_FILE_DELETION_IS_ABNORMAL(14008, "用户文件删除异常"),
 
     /**
-     * 用户文件名称过长 14009
+     * 系统文件地址异常 14009
      */
-    USER_FILE_NAME_IS_TOO_LONG(14009, "用户文件名称过长"),
+    SYSTEM_FILE_ADDRESS_IS_ABNORMAL(14009, "系统文件地址异常"),
 
     /**
-     * 用户文件后缀过长 14010
+     * 用户文件名称过长 14010
      */
-    USER_FILE_SUFFIX_IS_TOO_LONG(14010, "用户文件后缀过长"),
+    USER_FILE_NAME_IS_TOO_LONG(14010, "用户文件名称过长"),
+
+    /**
+     * 用户文件后缀过长 14011
+     */
+    USER_FILE_SUFFIX_IS_TOO_LONG(14011, "用户文件后缀过长"),
+
+    /**
+     * 邮件发送异常 15000
+     */
+    EMAIL_WAS_SENT_ABNORMALLY(15000, "邮件发送异常"),
 
     /**
      * 数据库服务出错 20000
@@ -207,6 +217,7 @@ public enum ReturnCode {
      * 数据库无此数据 20001
      */
     DATA_IS_NOT_AVAILABLE_IN_THE_DATABASE(20001, "数据库无此数据"),
+
 
     /**
      * 消息中间件服务出错 30000

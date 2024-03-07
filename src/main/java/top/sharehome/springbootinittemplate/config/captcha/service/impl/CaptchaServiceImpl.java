@@ -10,16 +10,16 @@ import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Service;
+import top.sharehome.springbootinittemplate.common.base.ReturnCode;
+import top.sharehome.springbootinittemplate.config.bean.SpringContextHolder;
 import top.sharehome.springbootinittemplate.config.captcha.condition.CaptchaCondition;
 import top.sharehome.springbootinittemplate.config.captcha.model.CaptchaCreate;
 import top.sharehome.springbootinittemplate.config.captcha.properties.CaptchaProperties;
 import top.sharehome.springbootinittemplate.config.captcha.properties.enums.CaptchaType;
 import top.sharehome.springbootinittemplate.config.captcha.service.CaptchaService;
-import top.sharehome.springbootinittemplate.common.base.ReturnCode;
-import top.sharehome.springbootinittemplate.config.bean.SpringContextHolder;
 import top.sharehome.springbootinittemplate.exception.customize.CustomizeReturnException;
-import top.sharehome.springbootinittemplate.utils.redisson.CacheUtils;
-import top.sharehome.springbootinittemplate.utils.redisson.constants.KeyPrefixConstants;
+import top.sharehome.springbootinittemplate.utils.redisson.KeyPrefixConstants;
+import top.sharehome.springbootinittemplate.utils.redisson.cache.CacheUtils;
 
 import javax.annotation.Resource;
 import java.util.UUID;
@@ -40,7 +40,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public CaptchaCreate createCaptcha() {
         CaptchaCreate captchaCreateResponse = new CaptchaCreate();
-        boolean enable = captchaProperties.isEnable();
+        boolean enable = captchaProperties.getEnable();
         captchaCreateResponse.setEnableCode(enable);
         if (!enable) {
             return captchaCreateResponse;

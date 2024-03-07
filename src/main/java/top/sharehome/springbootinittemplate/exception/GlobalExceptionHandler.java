@@ -11,17 +11,13 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import top.sharehome.springbootinittemplate.common.base.HttpStatus;
 import top.sharehome.springbootinittemplate.common.base.R;
-import top.sharehome.springbootinittemplate.exception.customize.CustomizeFileException;
-import top.sharehome.springbootinittemplate.exception.customize.CustomizeLockException;
-import top.sharehome.springbootinittemplate.exception.customize.CustomizeReturnException;
-import top.sharehome.springbootinittemplate.exception.customize.CustomizeTransactionException;
+import top.sharehome.springbootinittemplate.exception.customize.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -32,7 +28,6 @@ import javax.validation.ValidationException;
  *
  * @author AntonyCheng
  */
-@ResponseBody
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -296,13 +291,25 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 自定义数据库事务异常
+     * 自定义锁异常
      *
      * @param e 异常
      * @return 返回结果
      */
     @ExceptionHandler(CustomizeLockException.class)
     public R<String> handleCustomizeLockException(CustomizeLockException e) {
+        log.error(e.getMessage(), e);
+        return R.fail(e.getReturnCode());
+    }
+
+    /**
+     * 自定义邮件异常
+     *
+     * @param e 异常
+     * @return 返回结果
+     */
+    @ExceptionHandler(CustomizeMailException.class)
+    public R<String> handleCustomizeMailException(CustomizeMailException e) {
         log.error(e.getMessage(), e);
         return R.fail(e.getReturnCode());
     }
