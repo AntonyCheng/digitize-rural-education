@@ -36,6 +36,8 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements Au
         User user = new User();
         user.setAccount(authRegisterDto.getAccount());
         user.setPassword(authRegisterDto.getPassword());
+        user.setMessageTotal(0L);
+        user.setMessageRead(0L);
         int insertResult = userMapper.insert(user);
         if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);

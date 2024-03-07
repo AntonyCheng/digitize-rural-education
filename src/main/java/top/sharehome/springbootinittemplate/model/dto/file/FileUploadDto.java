@@ -31,7 +31,7 @@ public class FileUploadDto implements Serializable {
     private MultipartFile multipartFile;
 
     /**
-     * 文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课；avatar：用户头像）
+     * 文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课；）
      */
     @NotEmpty(message = "上传文件所属模块不能为空", groups = {PostGroup.class})
     private String fileType;

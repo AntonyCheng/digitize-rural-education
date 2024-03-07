@@ -10,7 +10,6 @@
         <result column="file_type" jdbcType="VARCHAR" property="type"/>
         <result column="file_size" jdbcType="BIGINT" property="size"/>
         <result column="file_url" jdbcType="VARCHAR" property="url"/>
-        <result column="file_resource_id" jdbcType="BIGINT" property="resourceId"/>
         <result column="file_user_id" jdbcType="BIGINT" property="userId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -24,7 +23,6 @@
         file_type,
         file_size,
         file_url,
-        file_resource_id,
         file_user_id,
         create_time,
         update_time,

@@ -56,7 +56,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     @Override
     @Transactional(rollbackFor = CustomizeTransactionException.class)
-    public Long uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
+    public String uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
         long size = multipartFile.getSize();
         String fileName = StringUtils.isNotBlank(multipartFile.getOriginalFilename()) ? multipartFile.getOriginalFilename() : multipartFile.getName();
         String suffix = FilenameUtils.getExtension(fileName).toLowerCase();
@@ -74,12 +74,12 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
-        return file.getId();
+        return url;
     }
 
     @Override
     @Transactional(rollbackFor = CustomizeTransactionException.class)
-    public Long uploadAvatar(MultipartFile multipartFile, Long userId) {
+    public String uploadAvatar(MultipartFile multipartFile, Long userId) {
         LambdaQueryWrapper<File> fileLambdaQueryWrapper = new LambdaQueryWrapper<>();
         fileLambdaQueryWrapper.eq(File::getUserId, userId).eq(File::getType, ModelConstant.FILE_TYPE_AVATAR);
         File avatarInDatabase = fileMapper.selectOne(fileLambdaQueryWrapper);
@@ -98,8 +98,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
                 .setSize(size)
                 .setName(fileName)
                 .setSuffix(suffix)
-                // 如果上传文件为头像，则将对应资源ID设置为0
-                .setResourceId(0L)
                 .setType(ModelConstant.FILE_TYPE_AVATAR)
                 .setUserId(userId);
         String dataTime = new DateTime().toString("yyyy/MM/dd");
@@ -110,7 +108,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
-        return file.getId();
+        return url;
     }
 
     @Override
@@ -155,8 +153,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             return new Page<>(pageModel.getPage(), pageModel.getSize());
         }
         queryWrapper.lambda().in(!userIdList.isEmpty(), File::getUserId, userIdList);
-        // 不需要对头像文件进行分页
-        queryWrapper.lambda().ne(File::getType,ModelConstant.FILE_TYPE_AVATAR);
 
         fileMapper.selectPage(page, queryWrapper);
         List<FilePageVo> filePageVoList = page.getRecords().stream().map(file -> {

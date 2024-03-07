@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import top.sharehome.springbootinittemplate.common.validate.GetGroup;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -30,7 +30,8 @@ public class PageModel implements Serializable {
     private Long page;
 
     @NotNull
-    @Size(min = 1, max = 100, groups = {GetGroup.class}, message = "分页参数错误")
+    @Min(value = 1, groups = {GetGroup.class}, message = "分页参数错误")
+    @Max(value = 100, groups = {GetGroup.class}, message = "分页参数错误")
     private Long size;
 
 }
