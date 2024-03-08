@@ -572,10 +572,8 @@ powerjob:
 
 # Sa-Token配置
 sa-token:
-  # todo 是否开启鉴权（不开启鉴权就意味SaCheckRole和SaCheckPermission失效，预先开启）
-  enable-authorization: true
-  # todo 是否开启认证（不开启认证就意味着所有接口无论是否使用Sa-Token注解，均开放，预先开启）
-  enable-identification: true
+  # todo 是否启用SaToken认证鉴权功能（此处为false并不是禁用SaToken，而是让SaToken相关注解失效，预先开启）
+  enable-sa: true
   # todo 是否使用jwt（建议如果没有开启redis配置就不要开启jwt，预先关闭）
   enable-jwt: false
   # token名称 (同时也是cookie名称)
