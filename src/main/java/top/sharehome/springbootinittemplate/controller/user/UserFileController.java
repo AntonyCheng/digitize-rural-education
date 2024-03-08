@@ -46,8 +46,8 @@ public class UserFileController {
             throw new CustomizeReturnException(ReturnCode.FILE_UPLOAD_EXCEPTION);
         }
         Long userId = LoginUtils.getLoginUserId();
-        String url = fileService.uploadFile(fileUploadDto.getMultipartFile(), fileUploadDto.getFileType(), userId);
-        return R.ok(url);
+        Long fileId = fileService.uploadFile(fileUploadDto.getMultipartFile(), fileUploadDto.getFileType(), userId);
+        return R.ok(fileId);
     }
 
     /**
@@ -60,8 +60,8 @@ public class UserFileController {
     public R<Long> uploadAvatar(@RequestPart("file") MultipartFile multipartFile) {
         FileUtils.validatedAvatar(multipartFile);
         Long userId = LoginUtils.getLoginUserId();
-        String url = fileService.uploadAvatar(multipartFile, userId);
-        return R.ok(url);
+        fileService.uploadAvatar(multipartFile, userId);
+        return R.ok("用户上传头像成功");
     }
 
 }

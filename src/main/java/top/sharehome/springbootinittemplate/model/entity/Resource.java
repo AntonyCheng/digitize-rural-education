@@ -46,7 +46,7 @@ public class Resource implements Serializable {
     private Long fileId;
 
     /**
-     * 资源对应文件类型（share：共享资源，fourC：4C微课，avatar：用户头像）
+     * 资源对应文件模块类型（share：共享资源，fourC：4C微课，customize：定制微课；）
      */
     @TableField(value = "resource_file_type")
     private String fileType;

@@ -21,7 +21,7 @@ public interface FileService {
      * @param fileType      文件类型
      * @param userId        文件所属用户ID
      */
-    String uploadFile(MultipartFile multipartFile, String fileType, Long userId);
+    Long uploadFile(MultipartFile multipartFile, String fileType, Long userId);
 
     /**
      * 上传头像
@@ -29,7 +29,7 @@ public interface FileService {
      * @param multipartFile 文件体
      * @param userId        头像所属用户ID
      */
-    String uploadAvatar(MultipartFile multipartFile, Long userId);
+    void uploadAvatar(MultipartFile multipartFile, Long userId);
 
     /**
      * 根据文件ID进行删除文件

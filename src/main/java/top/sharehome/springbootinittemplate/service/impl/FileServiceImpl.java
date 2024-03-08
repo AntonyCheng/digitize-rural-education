@@ -55,8 +55,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     private UserMapper userMapper;
 
     @Override
-    @Transactional(rollbackFor = CustomizeTransactionException.class)
-    public String uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
+    public Long uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
         long size = multipartFile.getSize();
         String fileName = StringUtils.isNotBlank(multipartFile.getOriginalFilename()) ? multipartFile.getOriginalFilename() : multipartFile.getName();
         String suffix = FilenameUtils.getExtension(fileName).toLowerCase();
@@ -70,16 +69,15 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         String rootPath = fileType + "/" + suffix + "/" + dataTime;
         String url = TencentUtils.upload(multipartFile, rootPath);
         file.setUrl(url);
-        int insertResult = fileMapper.insert(file);
-        if (insertResult == 0) {
+        if (save(file)) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
-        return url;
+        return file.getId();
     }
 
     @Override
     @Transactional(rollbackFor = CustomizeTransactionException.class)
-    public String uploadAvatar(MultipartFile multipartFile, Long userId) {
+    public void uploadAvatar(MultipartFile multipartFile, Long userId) {
         LambdaQueryWrapper<File> fileLambdaQueryWrapper = new LambdaQueryWrapper<>();
         fileLambdaQueryWrapper.eq(File::getUserId, userId).eq(File::getType, ModelConstant.FILE_TYPE_AVATAR);
         File avatarInDatabase = fileMapper.selectOne(fileLambdaQueryWrapper);
@@ -108,7 +106,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         if (insertResult == 0) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
-        return url;
     }
 
     @Override
