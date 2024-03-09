@@ -2,8 +2,10 @@ package top.sharehome.springbootinittemplate.model.dto.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import top.sharehome.springbootinittemplate.model.entity.PageModel;
 
 import java.io.Serializable;
 
@@ -14,10 +16,11 @@ import java.io.Serializable;
  * @since 2023/12/6 22:13:58
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilePageDto implements Serializable {
+public class FilePageDto extends PageModel implements Serializable {
 
     private static final long serialVersionUID = -2165108330636419018L;
 

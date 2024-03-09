@@ -1,6 +1,7 @@
 package top.sharehome.springbootinittemplate.controller.user;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import org.aspectj.apache.bcel.classfile.ConstantModule;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,7 @@ public class UserFileController {
     private FileService fileService;
 
     /**
-     * 用户上传文件
+     * 用户上传共享文件
      *
      * @param fileUploadDto 文件上传Dto类
      * @return 返回文件ID
@@ -42,11 +43,8 @@ public class UserFileController {
     @PostMapping("/upload_file")
     public R<Long> uploadFile(@Validated(PostGroup.class) FileUploadDto fileUploadDto) {
         FileUtils.validatedFile(fileUploadDto.getMultipartFile());
-        if (!ModelConstant.FILE_TYPE.contains(fileUploadDto.getFileType())) {
-            throw new CustomizeReturnException(ReturnCode.FILE_UPLOAD_EXCEPTION);
-        }
         Long userId = LoginUtils.getLoginUserId();
-        Long fileId = fileService.uploadFile(fileUploadDto.getMultipartFile(), fileUploadDto.getFileType(), userId);
+        Long fileId = fileService.uploadFile(fileUploadDto.getMultipartFile(), ModelConstant.FILE_TYPE_SHARE, userId);
         return R.ok(fileId);
     }
 

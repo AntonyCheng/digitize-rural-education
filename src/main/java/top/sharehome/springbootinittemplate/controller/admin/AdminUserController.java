@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import top.sharehome.springbootinittemplate.common.base.Constants;
 import top.sharehome.springbootinittemplate.common.base.R;
 import top.sharehome.springbootinittemplate.common.validate.GetGroup;
+import top.sharehome.springbootinittemplate.common.validate.PostGroup;
 import top.sharehome.springbootinittemplate.common.validate.PutGroup;
 import top.sharehome.springbootinittemplate.model.dto.user.UserPageDto;
 import top.sharehome.springbootinittemplate.model.dto.user.UserResetDto;
-import top.sharehome.springbootinittemplate.model.entity.PageModel;
 import top.sharehome.springbootinittemplate.model.vo.user.UserPageVo;
 import top.sharehome.springbootinittemplate.service.UserService;
 import top.sharehome.springbootinittemplate.utils.satoken.LoginUtils;
@@ -68,13 +68,12 @@ public class AdminUserController {
     /**
      * 分页获取用户信息
      *
-     * @param pageModel   分页实体类
      * @param userPageDto 用户分页Dto类
      * @return 返回分页数据
      */
-    @GetMapping("page")
-    public R<Page<UserPageVo>> pageUser(@Validated(GetGroup.class) PageModel pageModel, UserPageDto userPageDto) {
-        Page<UserPageVo> res = userService.pageUser(pageModel, userPageDto);
+    @GetMapping("/page")
+    public R<Page<UserPageVo>> pageUser(@Validated({GetGroup.class}) UserPageDto userPageDto) {
+        Page<UserPageVo> res = userService.pageUser(userPageDto);
         return R.ok(res);
     }
 

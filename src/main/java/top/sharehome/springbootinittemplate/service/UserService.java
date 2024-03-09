@@ -26,5 +26,5 @@ public interface UserService {
     /**
      * 分页获取用户文件信息
      */
-    Page<UserPageVo> pageUser(PageModel pageModel, UserPageDto userPageDto);
+    Page<UserPageVo> pageUser(UserPageDto userPageDto);
 }

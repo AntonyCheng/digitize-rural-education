@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import top.sharehome.springbootinittemplate.common.validate.GetGroup;
+import top.sharehome.springbootinittemplate.common.validate.PostGroup;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -20,16 +21,13 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors(chain = true)
-public class PageModel implements Serializable {
+public class PageModel{
 
-    private static final long serialVersionUID = -1649075566134281161L;
-
-    @NotNull
+    @NotNull(groups = {GetGroup.class}, message = "分页参数不能为空")
     @Min(value = 1, groups = {GetGroup.class}, message = "分页参数错误")
     private Long page;
 
-    @NotNull
+    @NotNull(groups = {GetGroup.class}, message = "分页参数不能为空")
     @Min(value = 1, groups = {GetGroup.class}, message = "分页参数错误")
     @Max(value = 100, groups = {GetGroup.class}, message = "分页参数错误")
     private Long size;

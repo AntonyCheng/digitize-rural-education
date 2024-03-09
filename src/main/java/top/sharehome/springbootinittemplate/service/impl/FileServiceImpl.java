@@ -55,6 +55,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     private UserMapper userMapper;
 
     @Override
+    @Transactional(rollbackFor = CustomizeTransactionException.class)
     public Long uploadFile(MultipartFile multipartFile, String fileType, Long userId) {
         long size = multipartFile.getSize();
         String fileName = StringUtils.isNotBlank(multipartFile.getOriginalFilename()) ? multipartFile.getOriginalFilename() : multipartFile.getName();
@@ -69,7 +70,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         String rootPath = fileType + "/" + suffix + "/" + dataTime;
         String url = TencentUtils.upload(multipartFile, rootPath);
         file.setUrl(url);
-        if (save(file)) {
+        if (!save(file)) {
             throw new CustomizeReturnException(ReturnCode.ERRORS_OCCURRED_IN_THE_DATABASE_SERVICE);
         }
         return file.getId();
@@ -125,9 +126,9 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     @Override
     @Transactional(readOnly = true, rollbackFor = CustomizeTransactionException.class)
-    public Page<FilePageVo> pageFile(PageModel pageModel, FilePageDto filePageDto) {
-        Page<File> page = new Page<>(pageModel.getPage(), pageModel.getSize());
-        Page<FilePageVo> res = new Page<>(pageModel.getPage(), pageModel.getSize());
+    public Page<FilePageVo> pageFile(FilePageDto filePageDto) {
+        Page<File> page = new Page<>(filePageDto.getPage(), filePageDto.getSize());
+        Page<FilePageVo> res = new Page<>(filePageDto.getPage(), filePageDto.getSize());
 
         QueryWrapper<File> queryWrapper = new QueryWrapper<>();
         // 处理文件名称查询条件
@@ -147,7 +148,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         userLambdaQueryWrapper.like(User::getAccount, filePageDto.getUserAccount());
         List<Long> userIdList = userMapper.selectList(userLambdaQueryWrapper).stream().map(User::getId).collect(Collectors.toList());
         if (StringUtils.isNotEmpty(filePageDto.getUserAccount()) && userIdList.isEmpty()) {
-            return new Page<>(pageModel.getPage(), pageModel.getSize());
+            return new Page<>(filePageDto.getPage(), filePageDto.getSize());
         }
         queryWrapper.lambda().in(!userIdList.isEmpty(), File::getUserId, userIdList);
 

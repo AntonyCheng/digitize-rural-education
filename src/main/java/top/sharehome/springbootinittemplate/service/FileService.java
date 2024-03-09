@@ -3,7 +3,6 @@ package top.sharehome.springbootinittemplate.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.multipart.MultipartFile;
 import top.sharehome.springbootinittemplate.model.dto.file.FilePageDto;
-import top.sharehome.springbootinittemplate.model.entity.PageModel;
 import top.sharehome.springbootinittemplate.model.vo.file.FilePageVo;
 
 /**
@@ -44,5 +43,5 @@ public interface FileService {
      * @param filePageDto 文件查询条件类
      * @return 分页结果
      */
-    Page<FilePageVo> pageFile(PageModel pageModel, FilePageDto filePageDto);
+    Page<FilePageVo> pageFile(FilePageDto filePageDto);
 }

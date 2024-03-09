@@ -33,6 +33,11 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
     public static final String IS_DELETED = "isDeleted";
 
     /**
+     * 需要处理的字段名——status
+     */
+    public static final String STATUS = "status";
+
+    /**
      * todo 如果有自己的一套鉴权系统，请去掉这个自动填充项
      * 需要处理的字段名——role
      */

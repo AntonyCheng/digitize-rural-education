@@ -12,7 +12,6 @@ import top.sharehome.springbootinittemplate.exception.customize.CustomizeTransac
 import top.sharehome.springbootinittemplate.mapper.UserMapper;
 import top.sharehome.springbootinittemplate.model.dto.user.UserPageDto;
 import top.sharehome.springbootinittemplate.model.dto.user.UserResetDto;
-import top.sharehome.springbootinittemplate.model.entity.PageModel;
 import top.sharehome.springbootinittemplate.model.entity.User;
 import top.sharehome.springbootinittemplate.model.vo.user.UserPageVo;
 import top.sharehome.springbootinittemplate.service.UserService;
@@ -62,9 +61,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true, rollbackFor = CustomizeTransactionException.class)
-    public Page<UserPageVo> pageUser(PageModel pageModel, UserPageDto userPageDto) {
-        Page<User> page = new Page<>(pageModel.getPage(), pageModel.getSize());
-        Page<UserPageVo> res = new Page<>(pageModel.getPage(), pageModel.getSize());
+    public Page<UserPageVo> pageUser(UserPageDto userPageDto) {
+        Page<User> page = new Page<>(userPageDto.getPage(), userPageDto.getSize());
+        Page<UserPageVo> res = new Page<>(userPageDto.getPage(), userPageDto.getSize());
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         // 处理用户账号查询条件
