@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * 自动字段填充器
+ * todo 把status字段给囊括进来
  *
  * @author AntonyCheng
  */

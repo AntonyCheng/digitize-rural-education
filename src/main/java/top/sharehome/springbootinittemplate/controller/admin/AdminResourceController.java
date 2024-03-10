@@ -1,16 +1,17 @@
 package top.sharehome.springbootinittemplate.controller.admin;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.sharehome.springbootinittemplate.common.base.Constants;
 import top.sharehome.springbootinittemplate.common.base.R;
+import top.sharehome.springbootinittemplate.common.validate.GetGroup;
 import top.sharehome.springbootinittemplate.common.validate.PostGroup;
 import top.sharehome.springbootinittemplate.model.ModelConstant;
 import top.sharehome.springbootinittemplate.model.dto.resource.ResourceAddDto;
+import top.sharehome.springbootinittemplate.model.dto.resource.ResourcePageDto;
+import top.sharehome.springbootinittemplate.model.vo.recource.ResourcePageVo;
 import top.sharehome.springbootinittemplate.service.ResourceService;
 import top.sharehome.springbootinittemplate.utils.satoken.LoginUtils;
 
@@ -47,6 +48,15 @@ public class AdminResourceController {
         Long userId = LoginUtils.getLoginUserId();
         resourceService.addResource(userId, resourceAddDto, ModelConstant.FILE_TYPE_CUSTOMIZE);
         return R.ok("定制化资源添加成功");
+    }
+
+    /**
+     * 管理员分页查询共享资源
+     */
+    @GetMapping("/page_share")
+    public R<Page<ResourcePageVo>> pageShare(@Validated(GetGroup.class) ResourcePageDto resourcePageDto) {
+        Page<ResourcePageVo> page = resourceService.pageResource(resourcePageDto, ModelConstant.FILE_TYPE_SHARE);
+        return R.ok(page);
     }
 
 }
