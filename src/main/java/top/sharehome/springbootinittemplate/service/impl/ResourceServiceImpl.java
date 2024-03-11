@@ -83,6 +83,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             resourcePageVo.setUserAccount(userAccount);
             File file = fileMapper.selectById(resource.getFileId());
             resourcePageVo.setFileName(file.getName());
+            resourcePageVo.setFileUrl(file.getUrl());
             BeanUtils.copyProperties(resource, resourcePageVo);
             return resourcePageVo;
         }).collect(Collectors.toList());
