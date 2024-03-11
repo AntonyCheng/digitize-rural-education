@@ -1,6 +1,5 @@
 package top.sharehome.springbootinittemplate.model.dto.resource;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,5 +37,10 @@ public class ResourcePageDto extends PageModel implements Serializable {
      * 资源所属用户的账号
      */
     private String userAccount;
+
+    /**
+     * 资源所对应文件类型
+     */
+    private String fileType;
 
 }

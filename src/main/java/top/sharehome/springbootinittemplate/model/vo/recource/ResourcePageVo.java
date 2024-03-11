@@ -50,9 +50,4 @@ public class ResourcePageVo implements Serializable {
      */
     private String fileName;
 
-    /**
-     * 资源对应文件模块类型
-     */
-    private String fileType;
-
 }

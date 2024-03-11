@@ -156,7 +156,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         List<FilePageVo> filePageVoList = page.getRecords().stream().map(file -> {
             FilePageVo filePageVo = new FilePageVo();
             String userAccount = userMapper.selectAccountById(file.getUserId());
-            // todo 这里需要搭建好资源模块之后在进行编写返回资源名称的功能
             filePageVo.setUserAccount(userAccount);
             BeanUtils.copyProperties(file, filePageVo);
             if (filePageVo.getSize() < TWO_10) {

@@ -59,4 +59,13 @@ public class AdminResourceController {
         return R.ok(page);
     }
 
+    /**
+     * 管理员分页查询4C资源
+     */
+    @GetMapping("/page_fourc")
+    public R<Page<ResourcePageVo>> pageFourc(@Validated(GetGroup.class) ResourcePageDto resourcePageDto) {
+        Page<ResourcePageVo> page = resourceService.pageResource(resourcePageDto, ModelConstant.FILE_TYPE_FOURC);
+        return R.ok(page);
+    }
+
 }
