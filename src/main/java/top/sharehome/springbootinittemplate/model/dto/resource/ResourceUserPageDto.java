@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResourcePageDto extends PageModel implements Serializable {
+public class ResourceUserPageDto extends PageModel implements Serializable {
 
     private static final long serialVersionUID = 2303570952494309377L;
 

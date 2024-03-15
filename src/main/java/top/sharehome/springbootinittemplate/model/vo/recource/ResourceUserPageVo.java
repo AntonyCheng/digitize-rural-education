@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 资源分页Vo类
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class ResourcePageVo implements Serializable {
+public class ResourceUserPageVo implements Serializable {
 
     private static final long serialVersionUID = 6549735237763810446L;
 
@@ -41,18 +42,8 @@ public class ResourcePageVo implements Serializable {
     private String userAccount;
 
     /**
-     * 资源对应文件ID
+     * 资源创建时间
      */
-    private Long fileId;
-
-    /**
-     * 资源对应文件名称
-     */
-    private String fileName;
-
-    /**
-     * 资源对应文件URL
-     */
-    private String fileUrl;
+    private LocalDateTime createTime;
 
 }

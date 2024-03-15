@@ -10,8 +10,8 @@ import top.sharehome.springbootinittemplate.common.validate.GetGroup;
 import top.sharehome.springbootinittemplate.common.validate.PostGroup;
 import top.sharehome.springbootinittemplate.model.ModelConstant;
 import top.sharehome.springbootinittemplate.model.dto.resource.ResourceAddDto;
-import top.sharehome.springbootinittemplate.model.dto.resource.ResourcePageDto;
-import top.sharehome.springbootinittemplate.model.vo.recource.ResourcePageVo;
+import top.sharehome.springbootinittemplate.model.dto.resource.ResourceAdminPageDto;
+import top.sharehome.springbootinittemplate.model.vo.recource.ResourceAdminPageVo;
 import top.sharehome.springbootinittemplate.service.ResourceService;
 import top.sharehome.springbootinittemplate.utils.satoken.LoginUtils;
 
@@ -54,8 +54,8 @@ public class AdminResourceController {
      * 管理员分页查询共享资源
      */
     @GetMapping("/page_share")
-    public R<Page<ResourcePageVo>> pageShare(@Validated(GetGroup.class) ResourcePageDto resourcePageDto) {
-        Page<ResourcePageVo> page = resourceService.pageResource(resourcePageDto, ModelConstant.FILE_TYPE_SHARE);
+    public R<Page<ResourceAdminPageVo>> pageShare(@Validated(GetGroup.class) ResourceAdminPageDto resourceAdminPageDto) {
+        Page<ResourceAdminPageVo> page = resourceService.pageAdminResource(resourceAdminPageDto, ModelConstant.FILE_TYPE_SHARE);
         return R.ok(page);
     }
 
@@ -63,8 +63,8 @@ public class AdminResourceController {
      * 管理员分页查询4C资源
      */
     @GetMapping("/page_fourc")
-    public R<Page<ResourcePageVo>> pageFourc(@Validated(GetGroup.class) ResourcePageDto resourcePageDto) {
-        Page<ResourcePageVo> page = resourceService.pageResource(resourcePageDto, ModelConstant.FILE_TYPE_FOURC);
+    public R<Page<ResourceAdminPageVo>> pageFourc(@Validated(GetGroup.class) ResourceAdminPageDto resourceAdminPageDto) {
+        Page<ResourceAdminPageVo> page = resourceService.pageAdminResource(resourceAdminPageDto, ModelConstant.FILE_TYPE_FOURC);
         return R.ok(page);
     }
 
