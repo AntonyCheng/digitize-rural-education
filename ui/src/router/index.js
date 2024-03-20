@@ -5,6 +5,8 @@ import register from '@/views/register.vue'
 
 import userMain from '@/views/user/main.vue'
 import sharing_resourceVue from '@/views/user/sharing_resource.vue'
+import resource_particularsVue from '@/views/user/resource_particulars.vue'
+import fourC_ResourceVue from '@/views/user/fourC_Resource.vue'
 
 import adminMain from '@/views/admin/main.vue'
 import ManageUsers from '@/views/admin/ManageUsers.vue'
@@ -80,6 +82,16 @@ const routes = [
         path:'/userMain/sharing',
         name:'sharing',
         component:sharing_resourceVue
+      },
+      {
+        path:'/userMain/particulars',
+        name:'resource_particulars',
+        component:resource_particularsVue
+      },
+      {
+        path:'/userMain/fourC',
+        name:'fourC',
+        component:fourC_ResourceVue
       }
     ]
   }
