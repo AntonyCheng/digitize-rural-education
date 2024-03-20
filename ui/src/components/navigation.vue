@@ -5,7 +5,7 @@
       <li @click="navigate('resource')">共享资源管理</li>
       <li @click="navigate('4c')">4C微课管理</li>
       <li @click="navigate('custom')">微课定制管理</li>
-      <li @click="navigate('resourceManagement')">资源管理</li>
+      <!-- <li @click="navigate('resourceManagement')">资源管理</li> -->
       <li @click="navigate('assistant')">数字助手管理</li>
     </ul>
     <!-- 退出按钮放在导航栏底部 -->
@@ -33,14 +33,17 @@ export default {
             this.$router.push('/adminMain/sharing');
             break;
           case '4c':
+          this.$router.push('/adminMain/fourC');
             // 路由到4C微课管理页面或者执行其他相关操作
             break;
           case 'custom':
+          this.$router.push('/adminMain/customize');
             // 路由到微课定制管理页面或者执行其他相关操作
             break;
-          case 'resourceManagement':
-            break;
+          // case 'resourceManagement':
+          //   break;
           case 'assistant':
+          this.$router.push('/adminMain/digital');
             // 路由到数字助手管理页面或者执行其他相关操作
             break;
           default:

@@ -1,11 +1,26 @@
 <template>
     <div class="header">
-      <div class="avatar">{{ userInitial }}</div>
+      <el-dropdown>
+        <div class="avatar">{{ userInitial }}</div>
+        <arrow-down />
+    <template #dropdown>
+      <el-dropdown-menu>
+        <el-dropdown-item>我的信息</el-dropdown-item>
+        <el-dropdown-item @click.native="toParent">微课上传</el-dropdown-item>
+        <el-dropdown-item @click.native="exit">退出</el-dropdown-item>
+
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
+
       <div class="username">{{ username }}</div>
     </div>
   </template>
   
   <script>
+  import Axios from '@/axios/axiosInstance';
+  import { ArrowDown } from '@element-plus/icons-vue'
+  import { ElMessage } from 'element-plus'
   export default {
     name: 'Header',
     props: {
@@ -19,11 +34,39 @@
         // 获取用户名的首字母作为头像
         return this.username ? this.username.charAt(0).toUpperCase() : '';
       }
+    },
+    methods:{
+      toParent(){
+        this.$parent.openForm()
+        
+      },
+          exit(){
+           Axios({
+        url: '/api/auth/logout',
+        method: 'delete',
+      }).then((res)=>{
+        console.log(res)
+      })
+      ElMessage({
+        message: '退出成功',
+        type: 'success',
+      })
+      // 清除本地存储的用户信息等
+      localStorage.clear();
+            // 执行退出操作
+      this.$router.push('/login');
+          }
     }
   };
   </script>
   
   <style>
+  .example-showcase .el-dropdown-link {
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
+}
   .header {
     display: flex;
     align-items: center;

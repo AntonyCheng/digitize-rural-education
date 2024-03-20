@@ -45,8 +45,6 @@ export default {
          const cachedData = localStorage.getItem('cachedData');
             if (cachedData) {
             this.cachedData = JSON.parse(cachedData); // 从 LocalStorage 获取数据
-             console.log(this.cachedData);
-             console.log(this.cachedData.data.name);
              this.name=this.cachedData.data.name
              console.log(this.name);
                    } else {

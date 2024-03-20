@@ -5,14 +5,15 @@
         <header>
           <!-- 页面头部内容 -->
           <Header :username="this.name" />
-          <router-link to="#">共享资源</router-link>&nbsp;&nbsp;
-          <router-link to="#">4C微课</router-link>&nbsp;&nbsp;
-          <router-link to="#">数字助手</router-link>&nbsp;&nbsp;
-          <router-link to="#">我的信息</router-link>
+          <router-link to="/userMain/sharing" class="link">共享资源</router-link>&nbsp;&nbsp;
+          <router-link to="/userMain/fourC" class="link" >4C微课</router-link>&nbsp;&nbsp;
+          <router-link to="#" class="link">数字助手</router-link>
         </header>
         <section>
+          <div class="main">
           <!-- 主要内容 -->
           <RouterView></RouterView>
+        </div>
         </section>
         <footer>
           <!-- 页面底部内容 -->
@@ -39,6 +40,16 @@
     Header,
   },
     methods:{
+
+      openForm(){
+        this.$router.push(
+      {
+      //添加需要传值到那个页面的路径
+      path:'/userMain/sharing', 
+      //携带需要传递的参数
+      query:{dialogFormVisible:true}
+      })
+      },
       created() {
            const cachedData = localStorage.getItem('cachedData');
               if (cachedData) {
@@ -109,8 +120,19 @@
   section {
   flex: 1 1 auto;
   overflow-y: auto;
-  padding: 20px;
-  background-color: #add8e6; /* 主要内容区域背景颜色 */
+  padding: 0px;
+  background-color: rgba(247,248,249,var(--tw-bg-opacity)); /* 主要内容区域背景颜色 */
+  }
+  .main{
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+    width: 50%;
+    margin: auto;
+  }
+  .link{
+    list-style: none;
+    color: rgb(44, 224, 164);
+    text-decoration: none;
   }
   </style>
   

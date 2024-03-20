@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      pageTitle: '加数前进乡村支教平台'
+      pageTitle: '资源共享平台'
     };
   },
   methods: {

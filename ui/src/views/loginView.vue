@@ -55,9 +55,10 @@ export default {
       })
       localStorage.setItem('cachedData', JSON.stringify(res.data));
       if(res.data.data.role=='admin'){
-        this.$router.push('/adminMain');
+        // this.$router.push('/adminMain');
+        location.replace(" /adminMain/users");
       }else if(res.data.data.role=='user'){
-        this.$router.push('/userMain');
+        this.$router.push('/userMain/sharing');
       }
 
         }
